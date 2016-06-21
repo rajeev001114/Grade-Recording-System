@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+{% extends 'rag_base.html' %}
+{% load staticfiles %} 
+{% block header %}
+{% endblock %}
+{% block form %}
+<div id="error1">
+	<strong id="st1"  >{{ error }}</strong>	
+	<strong id="st2"  >{{ success }}</strong>
+</div>
+<style type="text/css">  
+	#st1 {
+		color:red;
+	}
+	#st2{
+		color:green;
+	}
+</style>
+<table id ="headertable" class="table table-hover " style="margin-top:10px; align:center; "  >
+	<tr bgcolor="#FF8000" >			
+		<td width="34%" bgcolor="#FF8000" align="center"><label for="usr" > <font color="#FFFFFF" size="5" > <strong > TEACHER REGISTRATION </strong ></font> </label> </td>
+	</tr>
+</table >
+<form id="form1" action="/TCH/insert_teacher_info/" method="post" >
+	{% csrf_token %}
+	<table id ="dptable" class="table table-hover "   >
+		<tr>			
+			<td width="14%"><label for="usr" >GENDER </label> </td>
+			<td> <input type="radio" name="gender" value="Male" checked> Male<br>
+				<input type="radio" name="gender" value="Female"> Female<br>
+				<input type="radio" name="gender" value="Other"> Other   </td>
+			</tr>
+			<tr>			
+				<td width="34%"><label for="usr" >ENTER EMAIL </label> </td>
+				<td > <input id="email" type="email" name="email"  required="required"  maxlength="30" size="50" placeholder="Ex: abc@xyz.com" ></td>
+			</tr>
+			<tr>			
+				<td width="34%"><label for="usr" >ENTER PASSWORD </label> </td>
+				<td > <input id="email" type="password" name="password"  required="required"  maxlength="30" size="50"  ></td>
+			</tr>
+			<tr>			
+				<td width="34%"><label for="usr" >FIRST NAME </label> </td>
+				<td > <input id="fname" type="text" name="fname"  required="required"  maxlength="30" size="50"   placeholder="Ex: Rahul Dev"></td>
+			</tr>
+			<tr>			
+				<td width="34%"><label for="usr" >LAST NAME </label> </td>
+				<td > <input id="lname" type="text" name="lname"   required="required"  maxlength="30" size="50"   placeholder="Ex:Parashar"></td>
+			</tr>
+			<tr>			
+				<td width="34%"><label for="usr" >DEPARTMENT</label> </td>
+				<td > <select name="dpname" id="dpname" form="form1" required >
+					<option value="">Select Departments</option>
+					{% for item in query_results %}
+					<option value="{{ item.department_name }}"> {{ item.department_name }} </option>
+					{% endfor %}
+				</select> </td>
+			</tr>
+			<tr>			
+				<td width="34%"><label for="usr" >EXPERIENCE </label> </td>
+				<td > <input id="exep" type="number"  min="0" name="exep"   class="required" maxlength="30" size="50"   placeholder="Ex: 2"> YEARS</td>
+			</tr>
+			<tr>			
+				<td width="34%"><label for="usr" >QUALIFICATION</label> </td>
+				<td > <select name="qualification" id="qualification" form="form1" required>
+					<option value="">Select Qualification</option>
+					<option value="10">10</option>
+					<option value="12">12</option>
+					<option value="UG">B Tech</option>
+					<option value="PG">M Tech</option>
+					<option value="Doctrate">Phd</option>
+				</select>
+			</td>
+		</tr>
+		<tr>			
+			<td width="34%"><label for="usr" >PHONE NUMBER</label> </td>
+			<td > <input id="phnum" type="tel" name="phnum"   class="required" maxlength="30" size="50"   placeholder="Ex: 09967303103"></td>
+		</tr>
+	</table>
+	<div  style="margin-top:20px; float:left">
+		<input type="submit"  value="submit details" />
+	</div>
+</form>
+<div id="div2" style="float: right ; margin-top:20px;  margin-left:20px; ">
+	<form action="/" method="post">
+		{% csrf_token %}
+		<input id= "mainmenu" type="submit" value="login" /> 
+	</form>
+</div>
+<div id="div2" style="float: right ; margin-top:20px; ">
+	<form action="/" method="post">
+		{% csrf_token %}
+		<input id= "mainmenu" type="submit" value="back" /> 
+	</form>
+</div>
+</div>
+{% endblock %}     

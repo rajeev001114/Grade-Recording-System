@@ -1,0 +1,9 @@
+WARNING [2016-05-29 00:13:37,011] [py.warnings] [__init__] [Process:5055] [Thread:139868727166720] /usr/local/lib/python2.7/dist-packages/Django-1.8.2-py2.7.egg/django/db/models/fields/__init__.py:1474: RuntimeWarning: DateTimeField Userlogin.last_login received a naive datetime (2016-05-29 00:13:37.010622) while time zone support is active.
+  RuntimeWarning)
+
+WARNING [2016-05-29 00:17:15,016] [py.warnings] [__init__] [Process:5055] [Thread:139868764108544] /usr/local/lib/python2.7/dist-packages/Django-1.8.2-py2.7.egg/django/db/models/fields/__init__.py:1474: RuntimeWarning: DateTimeField Userlogin.last_login received a naive datetime (2016-05-29 00:17:15.015592) while time zone support is active.
+  RuntimeWarning)
+
+WARNING [2016-05-29 00:53:18,395] [py.warnings] [__init__] [Process:5245] [Thread:140081557923584] /usr/local/lib/python2.7/dist-packages/Django-1.8.2-py2.7.egg/django/db/models/fields/__init__.py:1474: RuntimeWarning: DateTimeField Userlogin.last_login received a naive datetime (2016-05-29 00:53:18.394443) while time zone support is active.
+  RuntimeWarning)
+

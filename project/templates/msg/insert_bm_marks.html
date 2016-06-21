@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+{% extends 'base2.html' %}
+{% load staticfiles %} 
+{% block header %}
+<header><h2><a  href="/MSG/upload_bmpolicy_view" >Previous step</a>  <a href="/MSG/upload_bmmarks_view" style="float:right;">Next step</a> </h2></header>
+{% endblock %}
+{% block body_block %}
+<div id="error">
+	<strong id="st1" >{{ error }}</strong>
+	<strong  id="st2" >{{ success }}</strong>
+</div>
+<style type="text/css">  
+	#weight{
+		color:white;
+		text-align:center;
+		padding:5px;
+		position: relative;
+		float: left;
+		display: block ;
+		width: 60% ;
+		background-color: #FF8000;
+		margin-top:10px;
+	}
+	#container {
+		height: 100%;
+	}
+	.hd {
+		height: 50px;
+		background: white;
+		position: relative;
+	}
+	.hd2 {
+		height: 80px;
+		background: white;
+		margin-top:10px;
+		position: relative;
+	}
+	.hd3 {
+		height: 150px;
+		background: white;
+		margin-top:10px;
+		position: relative;
+	}
+</style> 
+<style type="text/css">     
+	select {
+		width:185px;
+	}
+	#st1 {
+		font-weight: bold;
+		color:red ;
+	}
+	.btn-file {
+		position: relative;
+		overflow: hidden;
+		margin: 20px;
+	}
+	.btn-file input[type=file] {
+		position: absolute;
+		top: 0;
+		right: 0;
+		min-width: 100%;
+		min-height: 100%;
+		font-size: 100px;
+		text-align: right;
+		filter: alpha(opacity=0);
+		opacity: 0;
+		outline: none;
+		background: white;
+		cursor: inherit;
+		display: block;
+	}
+	#st2 {
+		font-weight: bold;
+		color:green ;  
+	}
+	h6 {
+		font-weight: bold;
+	}
+</style>
+<script type="text/javascript">
+	$(function() {
+		$('#f1').submit(function() {
+			if(!$("form input[type=file]").val()) {
+				alert('You must select a filled template CSV file!');
+				return false;
+			}
+		});
+	});
+</script>
+<div id="container">
+	<div class="hd">
+		<div id="weight" class="row-fluid">
+			<strong >UPLOAD BLENDED MOOCS MARK SHEET  </strong>
+		</div>
+	</div>
+	<div class="hd2">
+		<div id="lebel_div" style="margin-right: 5px ;"  >
+			<select name="cname" id="cname" form="f1" style="float: right ;" required >
+				<option value="">Select Course</option>
+				{% for item1 in query1 %}
+				<option value="{{ item1.courseid.course_name }}"> {{ item1.courseid.course_name  }} </option>
+				{% endfor %}
+			</select> 
+		</div>
+		<form id = "f1" action="/MSG/insert_bmmarks/" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<input type="file" name="sentFile" class="btn btn-default btn-file" />
+			<input id="uploadf" type="submit" name="submit" value="Upload file" style="margin-left: 20px; "   />
+		</form>
+	</div>
+	<div id="div2" style="float: left ; margin-top: 150px;  margin-left: 20px;" >
+		<form action="/MSG/" method="post">
+			{% csrf_token %}
+			<input id= "mainmenu" type="submit"  value="back" enabled /> 
+		</form>
+	</div>
+	{% endblock %}     

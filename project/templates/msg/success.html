@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% extends 'base2.html' %}
+{% load staticfiles %} 
+{% block header %}
+<header><h2>Students' Information for {{teachername}}</h2></header>
+{% endblock %}
+{% block body_block %}
+<div id="success" >
+	<strong class="alert alert-success" >{{ success }}</strong> 
+</div>
+<div style="margin-top: 50px " ;>
+	<strong class="alert alert-info" >Your grade policy id is: {{ gp_id }}</strong>
+</div>
+<div id = "double">
+	<div id="div2" style="margin-top: 60px " ;>
+		<form action="/MSG/" method="post">
+			{% csrf_token %}
+			<input id= "mainmenu" type="submit" value="main menu"  /> 
+		</form>
+	</div>
+	<div id="view" style="margin-top: 10px " ; >
+		<form id="form1" action="/MSG/view_view/" method="post">
+			{% csrf_token %}
+			<input id= "showgpolicy" type="submit" value="View Grade Policy"  /> 
+		</form>
+	</div>
+</div>
+{% endblock %}     

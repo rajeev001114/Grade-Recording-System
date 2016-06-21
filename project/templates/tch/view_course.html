@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% extends 'base2.html' %}
+{% load staticfiles %} 
+{% block header %}
+{% if count > 1 %}
+<header>	 <h2 style="color:#000099; ">You have been assigned {{ count }} courses. </h2></header>
+{% else %}
+<header><h2>You have been assigned {{ count }} course.</h2></header>
+{% endif %}
+{% endblock %}
+{% block body_block %}
+<div id="dpdetail" class="row-fluid" style="margin-top:10px;">
+	<strong > ALLOTTED COURSE DETAILS FOR {{ session }} </strong>
+</div>
+<style type="text/css">  
+	#dpdetail{
+		color:white;
+		text-align:center;
+		padding:5px;
+		position: relative;
+		float: left;
+		display: block ;
+		width: 502px ;
+		background-color: #FF8000;
+	}
+	#st1 {
+		color:red;
+	}
+	#st2{
+		color:green;
+	}
+</style>
+<div id="showdata" style="margin-top:50px ; float: left;">
+	<table id="table_show" class="table table-hover table-bordered"   >
+		<tr align="center" bgcolor="#DEB887">
+			<th>Course Code </th>
+			<th> Name</th>
+		</tr>
+		{% for item in query_results %}
+		<tr> 
+			<td>{{ item.courseid.course_code}}</td>
+			<td>{{ item.courseid.course_name }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+<div id="div2" style="float: right ; margin-top:10px;  " >
+	<form action="/TCH/" method="post">
+		{% csrf_token %}
+		<input id= "mainmenu" type="submit" value="main menu"    /> 
+	</form>
+</div>
+{% endblock %}     

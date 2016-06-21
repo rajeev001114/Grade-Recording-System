@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% extends 'base2.html' %}
+{% load staticfiles %} 
+{% block header %}
+<header><h2>Students' Information for {{teachername}}</h2></header>
+{% endblock %}
+{% block body_block %}
+<div id="success" >
+	<strong class="alert alert-success" >{{ success }}</strong> 
+</div>
+<div id = "double">
+	<div id="div2" style="margin-top: 60px " ;>
+		<form action="/MSG/" method="post">
+			{% csrf_token %}
+			<input id= "mainmenu" type="submit" value="main menu"  /> 
+		</form>
+	</div>
+	<div id="view" style="margin-top: 10px " ; >
+		<form id="form1" action="/MSG/generate_final_marksheet/" method="post">
+			{% csrf_token %}
+			<input id= "showgpolicy" type="submit" value="generate final mark sheet"  /> 
+		</form>
+	</div>
+</div>
+{% endblock %}     

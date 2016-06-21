@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+{% extends 'base3.html' %}
+{% load staticfiles %} 
+{% block header %}
+<header><h2 style="color:#000099; ">	</a></h2></header>
+{% endblock %}
+{% block body_block %}
+<div id="container">
+	<div class="hd">
+		<div  id="dpdetail" class="row-fluid" >
+			<strong > ALLOCATE SEMESTER COURSES HERE </strong>
+		</div>
+		<div id="div2" style="float: right ;  " >
+			<form action="/ADM/course_management/" method="post">
+				{% csrf_token %}
+				<input id= "mainmenu" type="submit" value="back"    /> 
+			</form>
+		</div>
+	</div>
+	<div class="hd2"  >
+		<table  style="border-spacing: 15px; width:100%  " >
+			<tr>
+				<td> <select name="dpname" id="dpname" form="form1" required>
+					<option value="">Select Course Department</option>
+					{% for item in query_results %}
+					<option value="{{ item.id }}"> {{ item.department_name }} </option>
+					{% endfor %}
+				</select>  </td>
+				<td><select name="teacher" id="teacher" form="form1" required>
+					<option value="">Select Faculty Department</option>
+					{% for item in query_results %}
+					<option value="{{ item.id}}"> {{ item.department_name }} </option>
+					{% endfor %}
+				</select>  </td>
+				<td> <div id="div2" style="float: right ;   " > <form id="form1" action="/ADM/get_course_and_teacher/" method="post">
+					{% csrf_token %}
+					<input id= "rgt" type="submit" value="get"  /> 
+				</form></div>
+			</td>			
+		</tr>
+	</table>
+	<div id="error1" style="margin-top:10px ;">
+		<strong id="st1"  >{{ error }} </strong>	
+		<strong id="st2" > {{ success }} </strong>
+	</div>
+</div>
+<hr size="10" shade> 
+<div class="hd3">
+	<table  style="border-spacing: 15px; width:100%  " >
+		<tr>
+			<td> <select name="courseid" id="courseid" form="form2"  required>
+				<option value="">Select Course</option>
+				{% for item in query_results1 %}
+				<option value="{{ item.id }}"> {{ item.course_name }} </option>
+				{% endfor %}
+			</select>  </td >
+			<td  ><select name="teacher" id="teacher" form="form2"  required>
+				<option value="">Select Faculty</option>
+				{% for item in query_results2 %}
+				<option value="{{ item.id }}"> {{ item.firstname }} {{ item.lastname }}  </option>
+				{% endfor %}
+			</select>  </td>
+			<td> <div id="div2" style="float: right ;   " > <form id="form2" action="/ADM/allocate_session_course/" method="post">
+				{% csrf_token %}
+				<input id= "rgt" type="submit" value="register"  /> 
+			</form>
+		</div>
+	</td>			
+</tr>
+</table>
+</div>
+</div>
+<SCRIPT language="javascript">
+	$(function(){
+		$('#form2').on('submit', function(e){
+			e.preventDefault();
+			$.ajax({
+				url: $(this).attr('action'),
+				type: "POST",
+				data: $(this).serialize(),
+				dataType:"JSON",
+				success: function(data){ $('#st1').html(""); $('#st2').html(""); if(data['returnval'].startsWith("*ERROR")) { $('#st1').html("<strong >"+data['returnval'])+"</strong>";} else { $('#st2').html("<strong>"+data['returnval'])+"</strong>"; } }
+			});
+		});
+	});
+</SCRIPT>
+<style type="text/css">  
+	#dpdetail{
+		color:white;
+		text-align:center;
+		padding:5px;
+		position: relative;
+		float: left;
+		display: block ;
+		width: 452px ;
+		background-color: #FF8000;
+	}
+	#st2 {
+		color:green;
+	}
+	#st1 {
+		color:red;
+	}
+	#container {
+		height: 100%;
+	}
+	.hd {
+		height: 80px;
+		background: white;
+		position: relative;
+	}
+	.hd2 {
+		height: 80px;
+		background: white;
+		margin-top:10px;
+		position: relative;
+	}
+	.hd3 {
+		height: 150px;
+		background: white;
+		margin-top:10px;
+		position: relative;
+	}
+</style>
+{% endblock %}     

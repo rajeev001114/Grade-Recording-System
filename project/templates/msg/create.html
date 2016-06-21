@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+{% extends 'base2.html' %}
+{% load staticfiles %} 
+{% block header %}
+<header><h2><a href="/MSG">Previous step</a>  <a href="/MSG/view_view" style="float:right;">Next step</a> </h2></header>
+{% endblock %}
+{% block body_block %}
+</SCRIPT>
+<style type="text/css" >
+	strong {
+		font-weight: bold;
+		color:red ;
+	} 
+</style>
+<div id="error">
+	<strong >{{ error }}</strong>
+</div>
+<div id="selectcourse" style="margin-top:45px;">
+	<select name="ccode" id="ccode" form="gp_form" required>
+		<option value="">Select Course</option>
+		{% for item in query_results %}
+		<option value="{{ item.courseid.course_code }}">  {{ item.courseid.course_code }} -{{ item.courseid.course_name }} </option>
+		{% endfor %}
+	</select> 
+</div>
+<div id="Adddata" style="margin-top:30px; height:300px;overflow:auto ;" >
+	<form id="gp_form" action="/MSG/create_grade_policy/" method="post" >
+		{% csrf_token %}
+		<table id="table_head" class="table table-hover table-bordered" >
+			<tr align="center" bgcolor="#DEB887" >
+				<th width="3%"></th>
+				<th width="2%">Abbreviation</th>
+				<th width="7%" >Assignment</th>
+				<th width="10%">No. of Assignments</th>
+				<th width="14%">No. of Best Score</th>
+				<th width="4%">Weight(%)</th>
+			</tr>
+			<tr>
+				<TABLE id="dataTable" class="table table-hover table-bordered"  >
+					<TR >
+						<TD width="2%"><INPUT id = "ip0" type="checkbox" name="chk"/></TD>
+						<TD width="4%"><INPUT id = "ip1" type="text" name="abbreviation" required="required" maxlength="4" size="7" placeholder="Ex: QZ for Quiz"/></TD>
+						<TD width="7%" ><INPUT  id = "ip2" type="text" name="assignment" required="required" maxlength="20" size="10" placeholder="Ex: Quiz, Mid Sem, End-Sem, etc."/></TD>	
+						<TD width="10%"><INPUT  id = "ip3" type="text" name="total" required="required" maxlength="2" size="10" placeholder="Ex: 5" /></TD>
+						<TD width="12%"><INPUT  id = "ip4"  type="text" name="mandatory" required="required" maxlength="2" size="10" placeholder="Ex: 4" /></TD>
+						<TD width="4%"><INPUT  id = "ip5" type="text" name="weight" required="required" maxlength="3" size="6" placeholder="Ex: 25" /></TD>
+					</TR>
+				</TABLE>
+			</tr>
+		</table>
+		<INPUT id="addbtn" type="button" value="Add Row" onclick="addRow('dataTable')" /> 
+		<INPUT id="dltbtn" type="button" value="Delete Row" onclick="deleteRow('dataTable')" />
+		<input id="sbtbtn"  type="submit" value="Submit Grade Policy"  /> 
+	</form>
+</div> 
+<SCRIPT language="javascript">
+	$(function(){
+		$('#gp_form').on('submit', function(e){
+			e.preventDefault();
+			$.ajax({
+				url: $(this).attr('action'),
+				type: "POST",
+				data: $(this).serialize(),
+				dataType:"JSON",
+				success: function(data){ if(data['returnval'] == "success") { document.location="/MSG/success?gpid="+data["gp_id"]} else { $('#error').html("<strong>"+data['returnval'])+"</strong>"; } }
+			});
+		});
+	});
+</SCRIPT>
+<div id="div2">
+	<form action="/MSG/" method="post">
+		{% csrf_token %}
+		<input id= "showgpolicy"type="submit" value="back"  /> 
+	</form>
+</div>
+<style type="text/css">  
+	#div2 {
+		color:white;
+		text-align:left;
+		padding:5px;
+		position: relative;
+		float: center;
+		display: block ;
+		width: 80% ;
+		margin-top: 40px;
+	}
+</style>  
+<SCRIPT language="javascript">
+	var row_id = 1;
+	function addRow(tableID) {
+		var table = document.getElementById(tableID);
+		var rowCount = table.rows.length;
+		var row = table.insertRow(rowCount);
+			row.id = 'id' + row_id; // ID is 'id#' because valid ID can't start with a number
+			row_id++;
+			var colCount = table.rows[0].cells.length;
+			for(var i=0; i<colCount; i++) {
+				var newcell	= row.insertCell(i);
+				newcell.innerHTML = table.rows[0].cells[i].innerHTML;
+				//alert(newcell.childNodes);
+				switch(newcell.childNodes[0].type) {
+					case "text":
+					newcell.childNodes[0].value = "";
+					break;
+					case "checkbox":
+					newcell.childNodes[0].checked = false;
+					break;
+					case "select-one":
+					newcell.childNodes[0].selectedIndex = 0;
+					break;
+				}
+			}
+		}
+		function deleteRow(tableID) {
+			try {
+				var table = document.getElementById(tableID);
+				var rowCount = table.rows.length;
+				for(var i=0; i<rowCount; i++) {
+					var row = table.rows[i];
+					var chkbox = row.cells[0].childNodes[0];
+					if(null != chkbox && true == chkbox.checked) {
+						if(rowCount <= 1) {
+							alert("Cannot delete all the rows.");
+							break;
+						}
+						table.deleteRow(i);
+						rowCount--;
+						i--;
+					}
+				}
+			}catch(e) {
+				alert(e);
+			}
+		}
+	</SCRIPT>
+	<script type="text/javascript">
+	</script>
+	<input id= "guidline" type="button" value="Guidelines to filling grade policy" onclick="toggle_visibility('guideline_div');"  style="margin:6px "; />
+	<div id="guideline_div" style="display:none ";>
+		<table class="table table-hover"  style="margin-top:10px; bgcolor:#00FF00 ; " >
+			<tr bgcolor="#FF6600">
+				<th>Column Name      </th>
+				<th> Description  </th> <th>Valid Value</th>
+			</tr>
+			<tr bgcolor="#CC9933">
+				<td>Abbreviation</td><td> This column is abbreviation for your assignment.</td> <td> QZ, MS, ES </td>
+			</tr>
+			<tr bgcolor="#CC9933">
+				<td>Assignment</td><td> This column should contain the name of your assignment (evaluation) in your institute. </td> <td> Quiz, Mid_sem, End_sem, Programing assignment, etc. Do not use hyphen(-) in assignment name.</td>
+			</tr>
+			<tr bgcolor="#CC9933" >
+				<td>No. of Assignments </td><td> This column should contain the total number of assignments. </td> <td> 1-99 </td>
+			</tr>
+			<tr bgcolor="#CC9933" >
+				<td>No. of Best Score </td><td>This column should contain the best assignment to include in the final mark sheet. </td> <td> 1-99 <= Total  </td>
+			</tr>
+			<tr bgcolor="#CC9933" >
+				<td>Weight(%) </td><td> Weight of your assignment.</td> <td> Sum of weight column shuold 100 </td>
+			</tr>
+			<tr bgcolor="#B8B8B8">
+				<td>Button</td><td> Description</td> <td> </td>
+			</tr>
+			<tr bgcolor="#CC9933">
+				<td>Add Row</td><td> Add new row in table.</td> <td>  </td>
+			</tr>
+			<tr bgcolor="#CC9933">
+				<td>Delete Row</td><td> Delete selected row from table.</td> <td> </td>
+			</tr>
+		</table>
+	</div>
+	{% endblock %}     

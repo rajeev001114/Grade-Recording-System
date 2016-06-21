@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% extends 'base2.html' %}
+{% load staticfiles %} 
+{% block header %}
+<header><h2><a  href="/MSG/upload_bmmarks_view" >Previous step</a>  </h2></header>
+{% endblock %}
+{% block body_block %}
+<style> 
+	#st2{
+		color:blue;
+	}
+</style> 
+<div id="weight">
+	<strong id="st2"  >{{ weight }}</strong>
+</div>
+<div style=" margin-top:10px;"> 
+	<select form ="form1" name="cname" id="cname"  required >
+		<option value="">Select Course</option>
+		{% for item1 in query1 %}
+		<option value="{{ item1.courseid.course_name }}"> {{ item1.courseid.course_name }} </option>
+		{% endfor %}
+	</select> 
+</div> 
+<div id = "double">
+	<div id="div2" style="margin-top: 60px " ;>
+		<form id="form1" action="/MSG/create_composite_marksheet/" method="post">
+			{% csrf_token %}
+			<input id= "showgpolicy" type="submit" value="Generate final composite mark sheet"  /> 
+		</form>
+	</div>
+	<div id="div3" style="margin-top: 25px " ; >
+		<form action="/MSG/" method="post">
+			{% csrf_token %}
+			<input id= "mainmenu" type="submit" value="main menu"  /> 
+		</form>
+	</div>
+</div>
+<div id="showdata" style="margin-top:20px ; width:80% ;">
+	<table id="table_show" class="table table-hover table-bordered"  >
+		<tr align="center" bgcolor="#DEB887">
+			<th>Course Name</th>
+			<th>Blended MOOCs Weightage</th>
+			<th>Modify</th>
+		</tr>
+		{% for item in q1 %}
+		<tr> 
+			<td>{{ item.course_name}}</td>
+			<td>{{ item.bmoocs_weight}}</td>
+			<td><a href="/MSG/weight_view">Edit</a></td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endblock %}     

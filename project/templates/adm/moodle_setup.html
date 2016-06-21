@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% extends 'base3.html' %}
+{% load staticfiles %} 
+{% block header %}
+<header><h2> {{ count }} </h2></header>
+{% endblock %}
+{% block body_block %}
+<div id="error1">
+	<strong id="st1"  >{{ error }}</strong>	
+	<strong id="st2"  >{{ success }}</strong>
+</div>
+<div id="dpdetail" class="row-fluid" style="margin-top:10px;">
+	<strong >select yes, If local marks of students are stored in MOODLE database</strong>
+</div>
+<style type="text/css">  
+	#dpdetail{
+		color:white;
+		text-align:center;
+		padding:5px;
+		position: relative; 
+		background-color: #FF8000;
+	}
+	#st1 {
+		color:red;
+	}
+	#st2{
+		color:green;
+	}
+</style>
+<div style="margin-top:30px; float:left">
+	<form  action="/ADM/moodle_binary/" method="post" >
+		{% csrf_token %}
+		<table id ="dptable" class="table table-hover "   >
+			<tr>			
+				<td width="34%"><label for="usr" >YES </label> </td>
+				<td > <input type="radio" name="moodle" value="1" > </td>
+			</tr>
+			<tr>			
+				<td width="34%"><label for="usr" >NO </label> </td>
+				<td > <input type="radio" name="moodle" value="0" checked> </td>
+			</tr>
+		</table>
+		<div  style="margin-top:20px; float:left">
+			<input type="submit"  value="submit" />
+		</div>
+	</form>
+</div>
+<div id="div2" style="float: right ; margin-top:220px;  " >
+	<form action="/ADM/" method="post">
+		{% csrf_token %}
+		<input id= "mainmenu" type="submit" value="back"    /> 
+	</form>
+</div>
+{% endblock %}     

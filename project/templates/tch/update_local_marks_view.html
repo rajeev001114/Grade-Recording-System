@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{% extends 'base2.html' %}
+{% load staticfiles %} 
+{% block header %}
+{% endblock %}
+{% block body_block %}
+<style> 
+	#st2{
+		color:red;
+	}
+	#st3{
+		color:green;
+	}
+</style> 
+<div id="weight">
+	<strong id="st2"  >{{ error }}</strong>
+	<strong id="st3"  >{{ success }}</strong>
+</div>
+<div style=" margin-top:5px;"> 
+	<select form ="form1" name="ccode" id="ccode"  required >
+		<option value="">Select Course</option>
+		{% for item1 in query1 %}
+		<option value="{{ item1.courseid.course_code }}"> {{ item1.courseid.course_name }} </option>
+		{% endfor %}
+	</select> 
+	<div id="div3" style="margin-top: 5px ; float:right ;"  >
+		<form action="/TCH/" method="post">
+			{% csrf_token %}
+			<input id= "mainmenu" type="submit" value="main menu"  /> 
+		</form>
+	</div>
+	<div id="div2" style="margin-top: 5px ; float:right; margin-right:10px;" >
+		<form id="form1" action="/TCH/update_get_exam_type/" method="post">
+			{% csrf_token %}
+			<input id= "getevaluation" type="submit" value="get evaluations"  /> 
+		</form>
+	</div> 
+</div>
+<hr size="160" >  
+<style> 
+	hr {
+		display: block;
+		margin-top: 1.5em;
+		margin-bottom: 0.5em;
+		margin-left: auto;
+		margin-right: auto;
+		border-style: inset;
+		border-width: 5px;
+		color:blue;
+	} 
+</style> 
+<div style=" margin-top:20px;"> 
+	<select form ="form2" name="examname" id="examname"  required >
+		<option value="">Select Evaluation</option>
+		{% for item1 in query3 %}
+		<option value="{{ item1 }}"> {{ item1 }} </option>
+		{% endfor %}
+	</select> 
+	<div id="div2" style="margin-top: 0px ; float:right; margin-right:400px;" >
+		<form id="form2" action="/TCH/get_student_marks/" method="post">
+			{% csrf_token %}
+			<input id= "showmarks" type="submit" value="show marks"  /> 
+		</form>
+	</div> 
+</div> 
+<hr size="160" >  
+<div id="showdata"  style="margin-top:5px ; float: left; position: relative; height:350px;overflow:auto ;">
+	<table id="table_show" class="table table-hover table-bordered"   >
+		<tr align="center" bgcolor="#DEB887">
+			<th>Roll Number </th>
+			<th> Marks</th>
+			<th>Updated Marks</th>
+			<th>Status</th>
+		</tr>
+		{% for item in query_results1 %}
+		<tr> 
+			<td >{{ item.roll_no }}</td>       
+			<td>{{ item.marks}}</td>
+			<form id= {{item.roll_no}} action="/TCH/update_student_marks/" method="post">
+				{% csrf_token %}
+				<td><input type="text" name="updatemarks" form= {{item.roll_no}}  maxlength="3" size="10"   placeholder="Updated marks"></td>
+				<td><a href="javascript:; "onclick="document.getElementById({{item.roll_no}}).submit();" >Update</a></td>
+				<td><input id= "roll" type="hidden" name="roll_no" value = {{item.roll_no}} /></td> 
+			</form>		
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endblock %}     

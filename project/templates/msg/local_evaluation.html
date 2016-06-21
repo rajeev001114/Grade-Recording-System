@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% extends 'base2.html' %}
+{% load staticfiles %} 
+{% block header %}
+<header><h2> {{teachername}}</h2></header>
+{% endblock %}
+{% block body_block %}
+<style type="text/css">  
+	.topics tr { line-height: 35px; }
+	#addbtn {
+		-moz-box-shadow: 3px 4px 0px 0px #899599;
+		-webkit-box-shadow: 3px 4px 0px 0px #899599;
+		box-shadow: 3px 4px 0px 0px #899599;
+		background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #C35817), color-stop(1, #C35817));
+		background:-moz-linear-gradient(top, #C35817 5%, #C35817 100%);
+		background:-webkit-linear-gradient(top, #C35817 5%, #C35817 100%);
+		background:-o-linear-gradient(top, #C35817 5%, #C35817 100%);
+		background:-ms-linear-gradient(top, #C35817 5%, #C35817 100%);
+		background:linear-gradient(to bottom, #C35817 5%, #C35817 100%);
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#C35817', endColorstr='#C35817',GradientType=0); 
+		background-color:#3B240B;
+		-moz-border-radius:15px;
+		-webkit-border-radius:15px;
+		border-radius:15px;
+		border:1px solid #d6bcd6;
+		display:inline-block;
+		cursor:pointer;
+		color:white;
+		font-family:Arial;
+		font-size:17px;
+		padding:7px 25px;
+		text-decoration:none;
+		text-shadow:0px 1px 0px #e1e2ed;
+	}
+	#addbtn:hover {
+		background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #3B240B), color-stop(1, #3B240B));
+		background:-moz-linear-gradient(top, #3B240B 5%, #3B240B 100%);
+		background:-webkit-linear-gradient(top, #3B240B 5%, #3B240B 100%);
+		background:-o-linear-gradient(top, #3B240B 5%, #3B240B 100%);
+		background:-ms-linear-gradient(top, #3B240B 5%, #3B240B 100%);
+		background:linear-gradient(to bottom, #3B240B 5%, #3B240B 100%);
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#3B240B', endColorstr='#3B240B',GradientType=0);
+		background-color:#3B240B;
+	}
+</style>
+<div id="main_view">
+	<table style="border-spacing:10px;" border-collapse=" separate" class="topics">
+		<tr>
+			<td width="10%" padding="20px"><form action="/MSG/create_view"><input id="addbtn" type="submit" value="Create Grade Policy"></form></td>
+			<td width="10%" padding="20px" ><form action="/MSG/view_view"><input id="addbtn" type="submit" value="View Grade Policy"></form></td>
+		</tr>
+		<tr>
+			<td width="10%" >    </td>
+			<td  width="10%" >   </td>
+		</tr>
+		<tr class="blank_row">
+			<td bgcolor="#FFFFFF" colspan="10">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="14%"><form action="/TCH/upload_local_marks_view" ><input id="addbtn" type="submit" value="upload local marks"></form></td>
+			<td width="14%"><form action="/TCH/update_local_marks_view"><input id="addbtn" type="submit" value="update local marks"></form></td>
+		</tr>
+		<tr class="blank_row">
+			<td bgcolor="#FFFFFF" colspan="10">&nbsp;</td>
+		</tr>
+	</table>
+</div>
+{% endblock %}     

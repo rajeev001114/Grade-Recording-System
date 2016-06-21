@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% extends 'base3.html' %}
+{% load staticfiles %} 
+{% block header %}
+<header><h2>Students' Information for {{teachername}}</h2></header>
+{% endblock %}
+{% block body_block %}
+<div id="success" >
+	<strong class="alert alert-success" >{{ success }}</strong> 
+</div>
+<div style="margin-top: 50px " ;>
+	<strong class="alert alert-info" >Number of course added: {{ ccount }}</strong>
+</div>
+<div id = "double">
+	<div id="div2" style="margin-top: 60px " ;>
+		<form action="/ADM/" method="post">
+			{% csrf_token %}
+			<input id= "mainmenu" type="submit" value="main menu"  /> 
+		</form>
+	</div>
+	<div id="view" style="margin-top: 20px " ; >
+		<form id="form1" action="/ADM/view_course/" method="post">
+			{% csrf_token %}
+			<input id= "mainmenu" type="submit" value="View courses"  /> 
+		</form>
+	</div>
+</div>
+{% endblock %}     

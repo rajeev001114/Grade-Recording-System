@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% extends 'base2.html' %}
+{% load staticfiles %} 
+{% block header %}
+<header></header>
+{% endblock %}
+{% block body_block %}
+<style> 
+	#st2{
+		color:red;
+	}
+	#st3{
+		color:green;
+	}
+</style> 
+<div id="weight">
+	<strong id="st2"  >{{ error }}</strong>
+	<strong id="st3"  >{{ success }}</strong>
+</div>
+<div style=" margin-top:10px;"> 
+	<select form ="form1" name="ccode" id="ccode"  required >
+		<option value="">Select Course</option>
+		{% for item1 in query1 %}
+		<option value="{{ item1.courseid.course_code }}"> {{ item1.courseid.course_name }} </option>
+		{% endfor %}
+	</select> 
+	<div id="div3" style="margin-top: 5px ; float:right ;"  >
+		<form action="/TCH/" method="post">
+			{% csrf_token %}
+			<input id= "mainmenu" type="submit" value="main menu"  /> 
+		</form>
+	</div>
+</div> 
+<div id = "double">
+	<div id="div2" style="margin-top: 40px " ;>
+		<form id="form1" action="/TCH/get_exam_type/" method="post">
+			{% csrf_token %}
+			<input id= "getevaluation" type="submit" value="get evaluations"  /> 
+		</form>
+	</div>
+</div>
+<hr size="160" >  
+<style> 
+	hr {
+		display: block;
+		margin-top: 1.5em;
+		margin-bottom: 0.5em;
+		margin-left: auto;
+		margin-right: auto;
+		border-style: inset;
+		border-width: 5px;
+		color:blue;
+	} 
+</style> 
+<div style=" margin-top:30px;"> 
+	<select form ="form2" name="examname" id="examname"  required >
+		<option value="">Select Evaluation</option>
+		{% for item1 in query3 %}
+		<option value="{{ item1 }}"> {{ item1 }} </option>
+		{% endfor %}
+	</select> 
+</div> 
+<div style="margin-top:30px; width:43%"  >
+	<label for="weight" >Enter Maximum Marks For Evaluation:</label>
+	{% csrf_token %}
+	<input id="examweight" type="text" name="weight" form ="form2" class="form-control"  required="required" maxlength="3" size="30"   placeholder="Ex: 20, 30, etc.">
+</div>
+<div  style=" margin-top:30px; float:left;">
+	<form id = "form2" action="/TCH/insert_evaluation_marks/" method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		<input type="file" name="sentFile" class="btn btn-default btn-file" />
+		<input id="uploadf" type="submit" name="submit" value="Upload file" style=" margin-top:30px; "   />
+	</form>
+</div>
+{% endblock %}     

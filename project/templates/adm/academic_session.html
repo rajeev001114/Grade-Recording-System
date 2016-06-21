@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+{% extends 'base3.html' %}
+{% load staticfiles %} 
+{% block header %}
+{% if count > 1 %}
+<header><h2 style="color:#000099; ">	You have register {{ count }} academic semesters. </a></h2></header>
+{% else %}
+<header><h2 style="color:#000099; ">You have register {{ count }} academic semester.</h2></header>
+{% endif %}
+{% endblock %}
+{% block body_block %}
+<div id="container">
+	<div class="hd">
+		<div  id="dpdetail" class="row-fluid" >
+			<strong > REGISTER ACADEMIC SESSION HERE </strong>
+		</div>
+		<div id="div2" style="float: right ;  " >
+			<form action="/ADM/" method="post">
+				{% csrf_token %}
+				<input id= "mainmenu" type="submit" value="back"    /> 
+			</form>
+		</div>
+		<div  style="margin-top:5px ; float: left;" >
+			<p>   </p>
+		</div>
+	</div>
+	<div class="hd2">
+		<table  style="border-spacing: 15px; width:100%  " >
+			<tr>
+				<td> <select name="acdsession" id="sname" form="form1" required>
+					<option value="">select academic session</option>
+					{% for item in year_list %}
+					<option value="{{ item }}"> {{ item }} </option>
+					{% endfor %}
+				</select>  </td>
+				<td><select name="sem" id="sem" form="form1" required>
+					<option value="">select semester</option>
+					{% for item in sem_list %}
+					<option value="{{ item }}"> {{ item }} </option>
+					{% endfor %}
+				</select>  </td>
+				<td> <div id="div2" style="float: right ;   " > <form id="form1" action="/ADM/register_session/" method="post">
+					{% csrf_token %}
+					<input id= "rgt" type="submit" value="register"  /> 
+				</form></div>
+			</td>			
+		</tr>
+	</table>
+	<div id="error1" style="margin-top:10px ;">
+		<strong id="st1"  >{{ error }} </strong>	
+		<strong id="st2"  >{{ success }}</strong>
+	</div>
+</div>
+<hr size="10" shade> 
+<div class="hd3">
+	<div id="showdata" style="margin-top:10px ; float: left; position: relative; height:250px;overflow:auto ; width:50%;">
+		<table id="table_show" class="table table-hover table-bordered"   >
+			<tr align="center" bgcolor="#DEB887">
+				<th>Year </th>
+				<th> Semester</th>
+			</tr>
+			{% for item in query_results %}
+			<tr> 
+				{% if item.is_active == 1 %}
+				<td> <font color="green">{{ item.year }} </font></td>       
+				<td> <font color="green"> {{ item.semester}} </font> </td>
+				{% else %}
+				<td>{{ item.year }}</td>       
+				<td>{{ item.semester}}</td>
+				{% endif %}	
+			</tr>	
+			{% endfor %}
+		</table>
+	</div>
+	<div id="div2" style="float: right ; margin-top:10px ;  " >
+		<form  id = "form1" action="/ADM/get_session/" method="post">
+			{% csrf_token %}
+			<input id= "getc" type="submit" value="view session"    /> 
+		</form>
+	</div>
+</div>
+</div>
+<style type="text/css">  
+	#dpdetail{
+		color:white;
+		text-align:center;
+		padding:5px;
+		position: relative;
+		float: left;
+		display: block ;
+		width: 452px ;
+		background-color: #FF8000;
+	}
+	#st1 {
+		color:red;
+	}
+	#st2{
+		color:green;
+	}
+	#container {
+		height: 100%;
+	}
+	.hd {
+		height: 80px;
+		background: white;
+		position: relative;
+	}
+	.hd2 {
+		height: 80px;
+		background: white;
+		margin-top:10px;
+		position: relative;
+	}
+	.hd3 {
+		height: 150px;
+		background: white;
+		margin-top:10px;
+		position: relative;
+	}
+</style>
+{% endblock %}     

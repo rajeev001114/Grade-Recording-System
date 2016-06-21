@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% extends 'base2.html' %}
+{% load staticfiles %} 
+{% block header %}
+<header><h2><a href="/MSG/create_view">Previous step</a>  <a href="/MSG/weight_view" style="float:right;">Next step</a> </h2></header>
+{% endblock %}
+{% block body_block %}
+{% if count > 1 %}
+<h3 style="color:#000099; ">You have submitted  {{ count }} grade policies.</h3>
+{% else %}
+<header><h2>You have submitted  {{ count }} grade policy.</h2></header>
+{% endif %}
+<div id="error">
+	<strong >{{ error }}</strong>
+</div>
+<style type="text/css">     
+	select {
+		width:185px;
+	}
+	strong {
+		font-weight: bold;
+		color:red ;
+	} 
+</style>
+<div id="lebel_div">
+	<select name="policy" id="policy" form="form1" required >
+		<option value="">select grade policy</option>
+		{% for item1 in query1 %}
+		<option value="{{ item1.gp_id }}"> {{ item1.gp_id }} </option>
+		{% endfor %}
+	</select> 
+</div>
+<div id = "double">
+	<div id="div2" style="float: right " ;>
+		<form action="/MSG/" method="post">
+			{% csrf_token %}
+			<input id= "mainmenu" type="submit" value="back"  /> 
+		</form>
+	</div>
+	<div id="view" style="float: right " ;>
+		<form id="form1" action="/MSG/show_grade_policy/" method="post">
+			{% csrf_token %}
+			<input id= "showgpolicy" type="submit" value="View Grade Policy"  /> 
+		</form>
+	</div>
+</div>
+<style type="text/css">  
+	#view{
+		width: 30% ;
+		margin-right:20px; 
+	}
+	#lebel_div{
+		color:white;
+		text-align:left;
+		padding:5px;
+		position: relative;
+		float: left;
+		display: block ;
+		width: 20% ;
+	}
+</style>  
+<div id="showdata" style="margin-top:80px";>
+	<table id="table_show" class="table table-hover table-bordered"  >
+		<tr align="center" bgcolor="#DEB887">
+			<th>Abbreviation</th>
+			<th>Assignment</th>
+			<th>No. of Assignments</th>
+			<th>No. of Best Score</th>
+			<th>Weight</th>
+		</tr>
+		{% for item in query_results %}
+		<tr> 
+			<td>{{ item.abbreviation}}</td>
+			<td>{{ item.assignment }}</td>
+			<td>{{ item.total}}</td>
+			<td>{{ item.mandatory }}</td>
+			<td>{{ item.weight}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endblock %}     

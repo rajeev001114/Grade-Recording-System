@@ -1,0 +1,206 @@
+{% load staticfiles %}
+<html lang="en"><head dir="ltr">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{% static 'css/dash.css' %}">
+<script src="{% static 'js/dash1.js' %}"></script>
+<script src="{% static 'js/dash2.js' %}"></script>
+{% if email == 'admin@gmail.com' %}
+<title>
+	Dashboard | ADMIN
+</title>
+{% else %}
+<title>
+	Dashboard | TEACHER
+</title>	
+{% endif %}
+{% block script %}
+{% endblock %}
+<script type="text/javascript" src="{% static 'js/a' %}"></script>
+<link href="{% static 'css/lms-style-vendor.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/lms-style-app.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/lms-style-app-extend1.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/lms-style-app-extend2.css' %}" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{% static 'js/lms-main_vendor.js' %}" charset="utf-8"></script>
+<script type="text/javascript" src="{% static 'js/require-config-lms.js' %}"></script>
+</head>
+<body class="ltr view-dashboard is-authenticated lang_en">
+	<div class="window-wrap" dir="ltr">
+		<a class="nav-skip" href="#my-courses">Skip to this view's content</a>
+		<style>
+		</style>
+		<header class="global " aria-label="Global Navigation">
+			<nav>
+				{% block header_block %}
+				<ol class="right nav-courseware">
+					<ol class="left nav-global authenticated">
+						<li class="nav-global-04"> <p><font id="cname" size="5"></font></p> </li>
+					</ol>
+				</ol>
+				<ol class="user">
+					<li class="primary">
+						<li></li> 
+						<li></li>
+					</ul>
+				</li>
+			</ol>
+			{% endblock %}
+		</nav>
+	</header>
+	<div class="content-wrapper" id="content">
+		<section class="container dashboard" id="dashboard-main">
+			<section class="profile-sidebar">
+				<header class="profile">
+					<h1 class="user-name"><span > PROFILE </span></h1>
+				</header>
+				<section class="user-info">
+					<ul>
+						<li class="info--email">
+							<span class="title">Who
+							</span> <span class="data" >{{name}}</span>
+						</li>
+						<li class="info--email">
+							<span class="title">Role
+							</span> <span class="data"   >{{rolename}}</span>
+						</li>
+						<li class="info--email">
+							<span class="title">Email
+							</span> <span class="data" >{% block email %}{{email}}{% endblock %}</span>
+						</li> 
+						{% if email == 'admin@gmail.com' %}
+						<li>
+							<span ><a href="/ADM/">Home</a></span>
+						</li>
+						<li>
+							<span ><a href={% static 'Manaual.pdf' %} target=_blank>Admin Manual</a></span>    
+						</li> 
+						{% else %}
+						<li>
+							<span ><a href="/TCH/">Home</a></span> 
+						</li>
+						<li>
+							<span ><a href={% static 'Manaual.pdf' %} target=_blank>Teacher Manual</a></span>    
+						</li> 
+						{% endif %}
+						<li>
+							<span ><a href="/changepassword/">Change Password</a></span>
+						</li>
+						<li>
+							<span ><a href="/logout" role="menuitem">Log Out</a></span>  
+						</li> 
+					</ul>
+				</section>
+			</section>
+			<section class="my-courses" id="my-courses" style="margin-top: -40px;">
+				{% block nav %}
+				<div class="navbar navbar-fixed">
+					<div class="navbar-inner">
+						<div class="container">
+							<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</a>
+							<div class="nav-collapse">
+								<ul class="nav">
+									<a class="brand" href="/ADM/local_setup/" >Local System Setup</a>
+									<a class="brand" href="/ADM/moodle_setup/">Moodle Setup</a> 
+									<a class="dropdown-toggle" data-toggle="dropdown" href="#" >Moodle Mapping <b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="/ADM/teacher_mapping/">Teacher Mappingt</a></li>
+										<li><a href="/ADM/student_mapping/">Student Department</a></li>
+										<li class="divider"></li>
+									</ul>
+									<li class="dropdown" id="localleval">
+										<a class="dropdown-toggle" data-toggle="dropdown" href="#">Department Management<b class="caret"></b></a>
+										<ul class="dropdown-menu">
+											<li><a href="/ADM/add_department/">Add Department</a></li>
+											<li><a href="/ADM/view_department/">View Department</a></li>
+											<li><a href="/ADM/remove_department_view/">Deactivate Department</a></li>
+											<li><a href="/ADM/reactive_department_view/">Reactivate Department</a></li>
+											<li class="divider"></li>
+										</ul>
+									</li>
+									<li><a href="/ADM/view_academic_session/">Academic Session</a></li>
+									<li class="dropdown" id="localeval">
+										<a class="dropdown-toggle" data-toggle="dropdown" href="#">Course Management<b class="caret"></b></a>
+										<ul class="dropdown-menu">
+											<li><a href="/ADM/add_course_view/">Add Course</a></li>
+											<li><a href="/ADM/view_course/">View Courses</a></li>
+											<li><a href="/ADM/view_session_course/">Course Allocation</a></li>
+											<li><a href="/ADM/view_allcate_course/">View Allocation</a></li>
+											<li class="divider"></li>
+										</ul>
+									</li>
+								</ul>
+								<ul class="nav pull-right">
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<style type="text/css">  
+					a {
+						padding-top: 5px;
+						padding-right: 80px;
+						padding-bottom: 5px;
+					}
+				</style> 
+				{% endblock %}
+				{% block header %}
+				<header>
+					<h2></h2>
+				</header>
+				{% endblock %}
+				<div>
+					<ul class="listing-courses">
+						{% block body_block %} {% endblock %}
+					</ul>
+				</div>
+			</section> 
+		</li>
+	</ul>
+</section>
+</section>
+</div>
+<style>
+	.wrapper-footer{
+		padding-top:16px;
+	}
+	.wrapper-footer footer .references{
+		margin-top:0px;
+	}
+	.wrapper-footer footer .colophon .nav-colophon li a {
+		border-bottom:none !important;
+		color:#3D3E3F;
+	}
+	.wrapper-footer footer{
+		width:960px;
+		margin:auto;
+	}
+</style>
+<div class="wrapper wrapper-footer" style="width:auto;">
+	<footer style="width:90%;">
+		<div class="colophon" style="width:43%">
+			<nav class="nav-colophon" style="margin-bottom:20px;">
+			</nav>
+		</div>
+	</footer>
+</div>
+</div>
+<script>window.baseUrl = "/static/";</script>
+<script type="text/javascript" src="{% static 'js/lms-application.js' %}" charset="utf-8"></script>
+<script type="text/javascript" src="{% static 'js/lms-modules.js' %}" charset="utf-8"></script>
+<script type="text/javascript" src="{% static 'js/dashboard.js' %}" charset="utf-8"></script>
+<script type="text/javascript">
+	$.ajax({
+		type:"GET",
+		url:"/ADM/get_college_name/",
+		success:function(response) {
+			$('#cname').html(response);
+		}
+	});
+</script>
+<div id="lean_overlay"></div><div id="reader-feedback" class="sr" style="display:none" aria-hidden="false" aria-atomic="true" aria-live="assertive"></div></body></html>

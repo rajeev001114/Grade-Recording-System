@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+{% extends 'base3.html' %}
+{% load staticfiles %} 
+{% block header %}
+{% if count > 1 %}
+<header>	<a href="/ADM/view_department"  style="color:#000099; " > <h2 style="color:#000099; ">You have  {{ count }} active departments. </a></h2></header>
+{% else %}
+<header><h2>You have  {{ count }}  active department.</h2></header>
+{% endif %}
+{% endblock %}
+{% block body_block %}
+<div id="error1">
+	<strong id="error"  >{{ error }}</strong>	
+	<strong id="st2"  >{{ success }}</strong>
+</div>
+<style type="text/css">  
+	#dpdetail{
+		color:white;
+		text-align:center;
+		padding:5px;
+		position: fixed;
+		float: left;
+		display: block ;
+		width: 452px ;
+		background-color: #FF8000;
+	}
+	#st1 , #error {
+		color:red;
+	}
+	#st2{
+		color:green;
+	}
+</style>
+<div id="lebel_div" style="margin-top:20px;  " >
+	<table>
+		<tr>
+			<td>
+				<select name="dpname" id="dpname" form="gp_form" required>
+					<option value="">Select Department</option>
+					{% for item in query_results %}
+					<option value="{{ item.department_name }}"> {{ item.department_name }} </option>
+					{% endfor %}
+				</select> 
+			</td>
+			<td style="float: right ; ">
+				<div id="div3" style="float: right ; margin-left:450px; " >
+					<form action="/ADM/course_management/" method="post" >
+						{% csrf_token %}
+						<input id= "mainmenu" type="submit" value="back"   /> 
+					</form>
+					<div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="Adddata"  style=" margin-top:30px;  " >
+			<form id="gp_form" action="/ADM/add_course/" method="post" >
+				{% csrf_token %}
+				<table id="table_head" class="table table-hover table-bordered" style=" width:600px;  " >
+					<tr align="center" bgcolor="#DEB887" >
+						<th width="3%"></th>
+						<th width="12%">Course Code</th>
+						<th width="30%" >Course Name</th>
+					</tr>
+				</table>
+				<TABLE id="dataTable" class="table table-hover table-bordered" style=" width:600px; " >
+					<TR >
+						<TD width="4%"><INPUT id = "ip0" type="checkbox" name="chk"/></TD>
+						<TD width="12%"><INPUT id = "ip1" type="text" name="ccode" required="required" maxlength="10" size="13" placeholder="Ex: ME 209"/></TD>
+						<TD width="40%" ><INPUT  id = "ip2" type="text" name="cname" required="required" maxlength="50" size="37" placeholder="Ex: Thermodynamics"/></TD>	
+					</TR>
+				</TABLE>
+				<INPUT id="addbtn" type="button" value="Add Row" onclick="addRow('dataTable')" /> 
+				<INPUT id="dltbtn" type="button" value="Delete Row" onclick="deleteRow('dataTable')" />
+				<input id="sbtbtn"  type="submit" value="Submit"  /> 
+			</form>
+		</div> 
+		<SCRIPT language="javascript">
+			$(function(){
+				$('#gp_form').on('submit', function(e){
+					e.preventDefault();
+					$.ajax({
+						url: $(this).attr('action'),
+						type: "POST",
+						data: $(this).serialize(),
+						dataType:"JSON",
+						success: function(data){ if(data['returnval'] == "success") { document.location="/ADM/success_add_course?ccount="+data["ccount"]} else { $('#error').html("<strong>"+data['returnval'])+"</strong>"; } }
+					});
+				});
+			});
+		</SCRIPT>
+		<SCRIPT language="javascript">
+			var row_id = 1;
+			function addRow(tableID) {
+				var table = document.getElementById(tableID);
+				var rowCount = table.rows.length;
+				var row = table.insertRow(rowCount);
+			row.id = 'id' + row_id; // ID is 'id#' because valid ID can't start with a number
+			row_id++;
+			var colCount = table.rows[0].cells.length;
+			for(var i=0; i<colCount; i++) {
+				var newcell	= row.insertCell(i);
+				newcell.innerHTML = table.rows[0].cells[i].innerHTML;
+				//alert(newcell.childNodes);
+				switch(newcell.childNodes[0].type) {
+					case "text":
+					newcell.childNodes[0].value = "";
+					break;
+					case "checkbox":
+					newcell.childNodes[0].checked = false;
+					break;
+					case "select-one":
+					newcell.childNodes[0].selectedIndex = 0;
+					break;
+				}
+			}
+		}
+		function deleteRow(tableID) {
+			try {
+				var table = document.getElementById(tableID);
+				var rowCount = table.rows.length;
+				for(var i=0; i<rowCount; i++) {
+					var row = table.rows[i];
+					var chkbox = row.cells[0].childNodes[0];
+					if(null != chkbox && true == chkbox.checked) {
+						if(rowCount <= 1) {
+							alert("Cannot delete all the rows.");
+							break;
+						}
+						table.deleteRow(i);
+						rowCount--;
+						i--;
+					}
+				}
+			}catch(e) {
+				alert(e);
+			}
+		}
+	</SCRIPT>
+	{% endblock %}     

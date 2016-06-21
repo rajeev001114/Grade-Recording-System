@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% extends 'base3.html' %}
+{% load staticfiles %} 
+{% block header %}
+{% if count > 1 %}
+<header>	<a href="/ADM/view_department"  style="color:#000099; " > <h2 style="color:#000099; ">You have added {{ count }} departments. </a></h2></header>
+{% else %}
+<header><h2>You have added {{ count }} department.</h2></header>
+{% endif %}
+{% endblock %}
+{% block body_block %}
+<div id="error1">
+	<strong id="st1"  >{{ error }}</strong>	
+	<strong id="st2"  >{{ success }}</strong>
+</div>
+<div id="dpdetail" class="row-fluid" style="margin-top:10px;">
+	<strong >ENTER DEPARTMENT DETAILS </strong>
+</div>
+<style type="text/css">  
+	#dpdetail{
+		color:white;
+		text-align:center;
+		padding:5px;
+		position: relative;
+		float: left;
+		display: block ;
+		background-color: #FF8000;
+	}
+	#st1 {
+		color:red;
+	}
+	#st2{
+		color:green;
+	}
+</style>
+<div style="margin-top:20px; float:left">
+	<form  action="/ADM/create_department/" method="post" >
+		{% csrf_token %}
+		<table id ="dptable" class="table table-hover "   >
+			<tr>			
+				<td width="34%"><label for="usr" >ENTER DEPARTMENT NAME </label> </td>
+				<td > <input id="dpname" type="text" name="dpname"  required="required" value="{{ dp_name }}" maxlength="30" size="50"   placeholder="Ex: Mechanical Engineering"></td>
+			</tr>
+			<tr>			
+				<td width="34%"><label for="usr" >ENTER ABBREVIATION FOR DEPARTMENT NAME </label> </td>
+				<td > <input id="dpname" type="text" name="dpabb"   required="required"  value="{{ dp_abb }}" maxlength="30" size="50"   placeholder="Ex: ME for Mechanical Engineering"></td>
+			</tr>
+		</table>
+		<div  style="margin-top:20px; float:left">
+			<input type="submit"  value="submit details" />
+		</div>
+	</form>
+	<div id="div2" style="float: right ; margin-top:20px;  " >
+		<form action="/ADM/department_management/" method="post">
+			{% csrf_token %}
+			<input id= "mainmenu" type="submit" value="back"    /> 
+		</form>
+	</div>
+</div>
+{% endblock %}     

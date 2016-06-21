@@ -1,0 +1,72 @@
+{% load staticfiles %}
+<html lang="en"><head dir="ltr">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{% static 'css/dash.css' %}">
+<script src="{% static 'js/dash1.js' %}"></script>
+<script src="{% static 'js/dash2.js' %}"></script>
+<title>
+	Register
+</title>
+{% block script %}
+{% endblock %}
+<script type="text/javascript" src="{% static 'js/a' %}"></script>
+<link href="{% static 'css/lms-style-vendor.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/lms-style-app.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/lms-style-app-extend1.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/lms-style-app-extend2.css' %}" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{% static 'js/lms-main_vendor.js' %}" charset="utf-8"></script>
+<script type="text/javascript" src="{% static 'js/require-config-lms.js' %}"></script>
+</head>
+<body class="ltr view-dashboard is-authenticated lang_en">
+	<div class="window-wrap" dir="ltr">
+		<a class="nav-skip" href="#my-courses">Skip to this view's content</a>
+		<style>
+		</style>
+		<header class="global " aria-label="Global Navigation" style="z-index:9999;">
+			<nav>
+				<h1 class="logo">
+					<a href="/">
+					</a>
+				</h1>
+				{% block header_block %}
+				<ol class="left nav-global authenticated">
+					<li class="nav-global-04">RKG INSTITUTE OF TECHNOLOGY </li>
+				</ol>
+				{% endblock %}
+			</nav>
+		</header>
+		<div class="content-wrapper" id="content"></div>
+		<section class="introduction">
+			{% block header %}{% endblock %}
+		</section>
+		<section class="login container" >
+			<section role="main" class="content" >
+				{% block form %}{% endblock %}
+				<br>
+				<br>
+			</section>
+			{% block aside %}{% endblock %}
+		</section>
+	</div>
+	<style>
+		.wrapper-footer{
+			padding-top:16px;
+		}
+		.wrapper-footer footer .references{
+			margin-top:0px;
+		}
+		.wrapper-footer footer .colophon .nav-colophon li a {
+			border-bottom:none !important;
+			color:#3D3E3F;
+		}
+		.wrapper-footer footer{
+			width:960px;
+			margin:auto;
+		}
+	</style>
+	<div class="wrapper wrapper-footer" style="width:auto;">
+	</div>
+</div>

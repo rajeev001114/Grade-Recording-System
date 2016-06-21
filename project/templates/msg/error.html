@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+{% extends 'base2.html' %}
+{% load staticfiles %} 
+{% block header %}
+<header><h2>Students' Information for {{teachername}}</h2></header>
+{% endblock %}
+{% block body_block %}
+<div id="error">
+	<strong class="text-danger" >{{ error }}</strong>
+</div>
+{% endblock %}     

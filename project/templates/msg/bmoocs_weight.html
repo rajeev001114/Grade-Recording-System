@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% extends 'base2.html' %}
+{% load staticfiles %} 
+{% block header %}
+<header><h2><a  href="/MSG/view_view" >Previous step</a>  
+	<div style="float:right; margin-bottem:5px; width:30%; text-align:right;">
+		<form id="form1" action="/MSG/upload_bmpolicy_view/" method="post"> {% csrf_token %}
+			<a href="javascript:;"  onclick="document.getElementById('form1').submit();">next step</a>
+			<input type="hidden" name="mess" />
+		</div>
+	</form>
+</h2></header>
+{% endblock %}
+{% block body_block %}
+<div id="error1">
+	<strong id="st1"  >{{ error }}</strong>	
+	<strong id="st2"  >{{ success }}</strong>
+	<strong id="st2"  >{{ contex_dict.success }}</strong>
+</div>
+<div id="weight" class="row-fluid">
+	<strong >ENTER OR UPDATE BLENDED MOOCS WEIGHT </strong>
+</div>
+<style type="text/css">  
+	#weight{
+		color:white;
+		text-align:center;
+		padding:5px;
+		position: relative;
+		float: left;
+		display: block ;
+		width: 60% ;
+		background-color: #FF8000;
+		margin-top:23px;
+	}
+	#div-weight{
+		color: white;
+		text-align:center;
+		padding:5px;
+		position: relative;
+		float: left;
+		display: block ;
+		width: 80% ;
+		background-color: #FF8000;
+	}
+	#st1 ,#error{
+		color:red;
+	}
+	#st2{
+		color:green;
+	}
+	#sucess{
+		display: block ;
+		margin-top:40px ;
+		background-color: #FFFFFF;
+	}
+</style> 
+<form  id="form1" class="form-inline" role="form" action="/MSG/insert_weight/" method="post" >
+	<div class="form-group" style="margin-top:30px;"  >
+		<div class="col-xs-12">
+			<label for="usr" >Enter Blended MOOC Weight: </label>
+			{% csrf_token %}
+			<input id="bmoocsweight" type="text" name="weight" class="form-control"  required="required" maxlength="3"    placeholder="Ex: 20, 30, etc.">
+		</div>
+	</div>
+	<div  style="margin-top:15px; margin-left:14px;" >
+		<label for="usr" >Select Blended MOOC course: </label>	
+		<select name="cname" id="cname"  required >
+			<option value="">Select Course</option>
+			{% for item1 in q2 %}
+			<option value="{{ item1.courseid.course_name }}"> {{ item1.courseid.course_name }} </option>
+			{% endfor %}
+		</select> 
+	</div> 
+	<div class="form-group" style="margin-top:30px;">
+		<input type="submit" class="btn btn-primary" data-dismiss="modal" value="submit weight" />
+	</div>
+</form>
+<div id="div2" style="float: left ; margin-top:100px;" " >
+	<form action="/MSG/" method="post">
+		{% csrf_token %}
+		<input id= "mainmenu" type="submit" value="back"    /> 
+	</form>
+</div>
+{% endblock %}     

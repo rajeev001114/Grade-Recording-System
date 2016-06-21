@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+{% extends 'base2.html' %}
+{% load staticfiles %} 
+{% block header %}
+<header><h2><a  href="/MSG/generate_template_view" >Previous step</a>  <a href="/MSG/weight_view" style="float:right;">Next step</a> </h2></header>
+{% endblock %}
+{% block body_block %}
+<div id="error">
+	<strong id="st1" >{{ error }}</strong>
+</div>
+<style type="text/css">     
+	select {
+		width:185px;
+	}
+	#st1 {
+		font-weight: bold;
+		color:red ;
+	}
+	.btn-file {
+		position: relative;
+		overflow: hidden;
+		margin: 20px;
+	}
+	.btn-file input[type=file] {
+		position: absolute;
+		top: 0;
+		right: 0;
+		min-width: 100%;
+		min-height: 100%;
+		font-size: 100px;
+		text-align: right;
+		filter: alpha(opacity=0);
+		opacity: 0;
+		outline: none;
+		background: white;
+		cursor: inherit;
+		display: block;
+	}
+	#st2 {
+		font-weight: bold;
+		color:green ;  
+	}
+	h6 {
+		font-weight: bold;
+	}
+</style>
+<script type="text/javascript">
+	$(function() {
+		$('#f1').submit(function() {
+			if(!$("form input[type=file]").val()) {
+				alert('You must select a filled template CSV file!');
+				return false;
+			}
+		});
+	});
+</script>
+<form id = "f1" action="/MSG/upload_template/" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	<input type="file" name="sentFile" class="btn btn-default btn-file" />
+	<input id="uploadf" type="submit" name="submit" value="Upload file" style="margin-left: 20px; "   />
+</form>
+<div id="div2" style="float: right " ;>
+	<form action="/MSG/" method="post">
+		{% csrf_token %}
+		<input id= "mainmenu" type="submit"  value="main menu" enabled /> 
+	</form>
+</div>
+<div id="instruction" style="float: left; margin-top:50px; " >
+	<p>
+		<h6><ol> Upload the filled template you have generate in previous step.</h6></p></ol>
+		<p><h6><ol> You can upload only one type of filled template.</h6></p></ol>
+		<p><h6><ol> If you upload multiple times recent upload will be in effect.</h6></p></ol>
+	</div>
+	<div id="success" style="float: left; margin-top:70px; " >
+		<strong  id="st2" >{{ success }}</strong>
+	</div>
+	{% endblock %}     

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+{% extends 'base2.html' %}
+{% load staticfiles %} 
+{% block header %}
+<header><h2><a  href="/MSG/insert_bmmarks_view" >Previous step</a>  
+	<div style="float:right; margin-bottem:5px; width:30%; text-align:right;">
+		<form id="form1" action="/MSG/generate_final_marksheet/" method="post"> {% csrf_token %}
+			<a href="javascript:;"  onclick="document.getElementById('form1').submit();">next step</a>
+			<input type="hidden" name="mess" />
+		</div>
+	</form>
+</h2></header>
+{% endblock %}
+{% block body_block %}
+<div id="error1">
+	<strong id="st1"  >{{ error }}</strong>	
+	<strong id="st2"  >{{ success }}</strong>
+	<strong id="st2"  >{{ contex_dict.success }}</strong>
+</div>
+<style type="text/css">  
+	#weight{
+		color:white;
+		text-align:center;
+		padding:5px;
+		position: relative;
+		float: left;
+		display: block ;
+		width: 60% ;
+		background-color: #FF8000;
+		margin-top:23px;
+	}
+	#div-weight{
+		color: white;
+		text-align:center;
+		padding:5px;
+		position: relative;
+		float: left;
+		display: block ;
+		width: 80% ;
+		background-color: #FF8000;
+	}
+	#st1 ,#error{
+		color:red;
+	}
+	#st2{
+		color:green;
+	}
+	#sucess{
+		display: block ;
+		margin-top:40px ;
+		background-color: #FFFFFF;
+	}
+</style> 
+<div style=" margin-top:10px;"> 
+	<select form ="getform" name="cname" id="cname"  required >
+		<option value="">Select Course</option>
+		{% for item1 in query1 %}
+		<option value="{{ item1.courseid.course_name }}"> {{ item1.courseid.course_name }} </option>
+		{% endfor %}
+	</select> 
+	<div id="div4" style="float: right ;"  >
+		<form id = "getform" action="/MSG/read_bmpolicy/" method="post">
+			{% csrf_token %}
+			<input id= "d_weight" type="submit" value="get evaluations"    /> 
+		</form>
+	</div>
+</div> 
+<div id="div-weight" class="row-fluid" style="margin-top:30px";>
+	<strong >DISTRIBUTE YOUR BLENDED MOOCS {{ weight }}  WEIGHT   </strong>
+</div>
+<div id="error2" style="float: left ; margin-top:10px;" >
+	<strong id="error">{{ error2 }}</strong>
+</div>
+<form  id="gp_form" action="/MSG/submit_bmpolicy/" method="post">
+	{% csrf_token %}
+	<div id="showdata" style="margin-top:95px; width: 70% ; position: relative; height:260px;overflow:auto ;">
+		<table id="table_show" class="table table-hover table-bordered"  >
+			<tr align="center" bgcolor="#DEB887">
+				<th>Assignment</th>
+				<th>Weight</th>
+			</tr>
+			{% for item in count_list %}
+			<tr> 
+				<td>{{ item }} </td>
+				<td><input  type="text" name="pweight" > </td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+	<div id="div3" style="float: left ; margin-top:30px; margin-right:5px;"  >
+		<input id= "policy_weight" type="submit" value="submit policy weight"    /> 
+	</div>
+</form>
+<SCRIPT language="javascript">
+	$(function(){
+		$('#gp_form').on('submit', function(e){
+			e.preventDefault();
+			$.ajax({
+				url: $(this).attr('action'),
+				type: "POST",
+				data: $(this).serialize(),
+				dataType:"JSON",
+				success: function(data){ if(data['returnval'] == "success") { document.location="/MSG/success_bmpolicy"} else { $('#error').html("<strong>"+data['returnval'])+"</strong>"; } }
+			});
+		});
+	});
+</SCRIPT>
+<div id="div2" style="float: right ;  margin-top:30px; margin-right:5px;" " >
+	<form action="/MSG/" method="post">
+		{% csrf_token %}
+		<input id= "mainmenu" type="submit" value="back"    /> 
+	</form>
+</div>
+{% endblock %}     

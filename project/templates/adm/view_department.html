@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% extends 'base3.html' %}
+{% load staticfiles %} 
+{% block header %}
+{% if count > 1 %}
+<header>	<a href="/ADM/view_department"  style="color:#000099; " > <h2 style="color:#000099; ">You have  {{ count }} active departments. </a></h2></header>
+{% else %}
+<header><h2>You have  {{ count }} active department.</h2></header>
+{% endif %}
+{% endblock %}
+{% block body_block %}
+<div id="dpdetail" class="row-fluid" style="margin-top:10px;">
+	<strong > DEPARTMENT DETAILS </strong>
+</div>
+<style type="text/css">  
+	#dpdetail{
+		color:white;
+		text-align:center;
+		padding:5px;
+		position: fixed;
+		float: left;
+		display: block ;
+		width: 452px ;
+		background-color: #FF8000;
+	}
+	#st1 {
+		color:red;
+	}
+	#st2{
+		color:green;
+	}
+</style>
+<div id="showdata" style="margin-top:50px ; float: left;">
+	<table id="table_show" class="table table-hover table-bordered"   >
+		<tr align="center" bgcolor="#DEB887">
+			<th> Department Name </th>
+			<th> Abbreviation</th>
+		</tr>
+		{% for item in query_results %}
+		<tr> 
+			<td>{{ item.department_name}}</td>
+			<td>{{ item.department_abb }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+<div id="div2" style="float: right ; margin-top:10px;  " >
+	<form action="/ADM/department_management/" method="post">
+		{% csrf_token %}
+		<input id= "mainmenu" type="submit" value="back"    /> 
+	</form>
+</div>
+{% endblock %}     

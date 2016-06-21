@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% extends 'base2.html' %}
+{% load staticfiles %} 
+{% block header %}
+<header><h2><a  href="/MSG/view_view" >Previous step</a>  <a href="/MSG/upload_template_view" style="float:right;">Next step</a> </h2></header>
+{% endblock %}
+{% block body_block %}
+{% if count > 1 %}
+<header><h2>You have submitted  {{ count }} grade policies.</h2></header>
+{% else %}
+<header><h2>You have submitted  {{ count }} grade policy.</h2></header>
+{% endif %}
+<div id="error">
+	<strong >{{ error }}</strong>
+</div>
+<style type="text/css">     
+	select {
+		width:185px;
+	}
+	strong {
+		font-weight: bold;
+		color:red ;
+	} 
+</style>
+<div id="lebel_div">
+	<select name="policy" id="policy" form="form1" required>
+		<option value="">select grade policy</option>
+		{% for item1 in query1 %}
+		<option value="{{ item1.gp_id }}"> {{ item1.gp_id }} </option>
+		{% endfor %}
+	</select> 
+</div>
+<div id = "double">
+	<div id="div2" style="float: right " ;>
+		<form action="/MSG/" method="post">
+			{% csrf_token %}
+			<input id= "mainmenu" type="submit" value="main menu"  /> 
+		</form>
+	</div>
+	<div id="view" style="float: right " ;>
+		<form id="form1" action="/MSG/generate_template/" method="post">
+			{% csrf_token %}
+			<input id= "showgpolicy" type="submit" value="generate template"  /> 
+		</form>
+	</div>
+</div>
+<div id = "downld">
+	<p>
+		<h6><ol> Download  <a href = "/static/msg/static/demofiles/template.csv" download>Sample Template</a> and <a href = "/static/msg/static/demofiles/filled-template.csv" download>Sample Filled-Template .csv</a> file</h6></p></ol>
+	</div>
+	<style type="text/css">  
+		#view{
+			width: 30% ;
+			margin-right:20px; 
+		}
+		#lebel_div{
+			color:white;
+			text-align:left;
+			padding:5px;
+			position: relative;
+			float: left;
+			display: block ;
+			width: 20% ;
+		}
+		#downld{
+			margin-top:200px; 
+			text-align:left;
+		}
+	</style>  
+	{% endblock %}     
